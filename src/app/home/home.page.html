@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      User Generator
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+
+    <!-- Tombol Generate User -->
+    <ion-button expand="block" shape="round" (click)="generateUser()" [disabled]="loading">
+      <ion-icon slot="start" name="refresh-outline" *ngIf="!loading"></ion-icon>
+      <span *ngIf="!loading">Generate New User</span>
+      <span *ngIf="loading">Generating...</span>
+    </ion-button>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-container animate__animated animate__fadeIn">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Fetching random identity...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+    </div>
+
+    <!-- User Card -->
+    <ion-card *ngIf="user && !loading" class="animate__animated animate__fadeInUp">
+
+      <!-- Gradient Header Background -->
+      <div class="card-header-bg"></div>
+
+      <!-- Foto Profil (Inside Layout) -->
+      <div class="avatar-wrapper">
+        <ion-img [src]="user.picture.large" alt="User Photo"></ion-img>
+      </div>
+
+      <ion-card-header>
+        <ion-card-subtitle>GENERATED PROFILE</ion-card-subtitle>
+        <ion-card-title>{{ user.name.first }} {{ user.name.last }}</ion-card-title>
+        <div class="user-age">{{ user.dob.age }} Years Old</div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="none">
+
+          <ion-item>
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <h3>Email Address</h3>
+              <p>{{ user.email }}</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <h3>Location</h3>
+              <p>{{ user.location.city }}, {{ user.location.country }}</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <h3>Phone</h3>
+              <p>{{ user.phone }}</p>
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

@@ -1,0 +1,85 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar color="primary">
+        <div style="display: flex; align-items: center; padding-left: 10px;">
+            <div>
+                <ion-title style="padding: 0; font-size: 1rem; font-weight: 600;">GRAMMAR CHECKER AI KEL-2</ion-title>
+                <span style="font-size: 0.75rem; opacity: 0.8; display: block;">
+                    {{ loading ? 'Typing...' : 'Online' }}
+                </span>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="chat-container">
+
+        <!-- 1. INTRO BUBBLE (AI) -->
+        <div class="message-bubble message-ai animate-in">
+            <span class="bubble-label">AI Assistant</span>
+            Hello! I'm your personal Grammar Assistant. Type any English sentence below, and I'll check it for you
+            automatically.
+        </div>
+
+        <!-- 2. USER INPUT BUBBLE (KANAN) - MIRRORING INPUT -->
+        <div *ngIf="grammarInput.value" class="message-bubble message-user animate-in">
+            <span class="bubble-label">You</span>
+            {{ grammarInput.value }}
+        </div>
+
+        <!-- 3. TYPING INDICATOR -->
+        <div *ngIf="loading" class="typing-indicator animate-in">
+            <ion-spinner name="dots"></ion-spinner> Checking grammar...
+        </div>
+
+        <!-- 4. HASIL KOREKSI (AI BUBBLE KIRI) -->
+        <div *ngIf="result && !loading" class="message-bubble message-ai animate-in">
+            <span class="bubble-label">AI Analysis</span>
+
+            <!-- Status Badge -->
+            <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                <ion-icon [name]="result.status === 'Correct' ? 'checkmark-circle' : 'warning'"
+                    [style.color]="result.status === 'Correct' ? '#22c55e' : '#ef4444'"
+                    style="font-size: 1.2rem; margin-right: 6px;">
+                </ion-icon>
+                <strong [style.color]="result.status === 'Correct' ? '#15803d' : '#b91c1c'">
+                    {{ result.status }}
+                </strong>
+            </div>
+
+            <!-- Correction Box -->
+            <div *ngIf="result.status === 'Incorrect'" class="correction-box incorrect">
+                <strong>Suggestion:</strong><br>
+                {{ result.correction }}
+            </div>
+
+            <div *ngIf="result.status === 'Correct'" class="correction-box correct">
+                Great job! Perfectly written.
+            </div>
+
+            <div style="font-size: 0.7rem; color: #94a3b8; text-align: right; margin-top: 4px;">
+                Just now
+            </div>
+        </div>
+
+        <!-- 5. ERROR MESSAGE -->
+        <div *ngIf="errorMessage" class="error-bubble animate-in">
+            {{ errorMessage }}
+        </div>
+
+        <!-- SPACER AGAR TIDAK KETUTUP INPUT -->
+        <div style="height: 100px;"></div>
+
+    </div>
+
+    <!-- FIXED BOTTOM INPUT -->
+    <div style="position: fixed; bottom: 0; left: 0; right: 0; padding: 10px; background: #f0f2f5;">
+        <div class="input-bubble">
+            <ion-textarea [formControl]="grammarInput" placeholder="Type a sentence..." rows="1" autoGrow="true"
+                mode="ios" style="max-height: 100px; overflow-y: auto;">
+            </ion-textarea>
+            <!-- <ion-icon name="send" color="primary" style="font-size: 1.5rem; margin-left: 8px;"></ion-icon> -->
+        </div>
+    </div>
+
+</ion-content>
