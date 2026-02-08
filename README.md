@@ -38,7 +38,7 @@ Follow these steps to run the project locally:
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/marsilodanang20/p8-pemrograman-bergerak
+    git clone https://github.com/marsilodanang20/p8-pemrograman-bergerak.git
     cd p8-pemrograman-bergerak
     ```
 
